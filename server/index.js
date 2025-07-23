@@ -1,60 +1,69 @@
 require('dotenv').config();
 const express = require('express');
-const cors = require('cors');
 const multer = require('multer');
-const cloudinary = require('./cloudinary-config');
+const cors = require('cors');
+const { v2: cloudinary } = require('cloudinary');
+const streamifier = require('streamifier');
+
 const app = express();
-
-// Usando memória para armazenar o upload temporariamente
-const upload = multer({ storage: multer.memoryStorage() });
-
-let galeria = [];
-
+const upload = multer();
 app.use(cors());
 app.use(express.json());
 
-app.post('/upload', upload.single('file'), async (req, res) => {
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
+
+// Upload de imagem ou vídeo
+app.post('/upload', upload.single('media'), async (req, res) => {
+  if (!req.file) {
+    return res.status(400).json({ message: 'Arquivo não enviado.' });
+  }
+
   try {
-    const file = req.file;
-    const caption = req.body.caption;
-
-    if (!file) {
-      return res.status(400).json({ message: 'Nenhum arquivo recebido.' });
-    }
-
-    // Upload para Cloudinary usando upload_stream para buffer
-    const uploadStream = cloudinary.uploader.upload_stream(
+    const stream = cloudinary.uploader.upload_stream(
       {
         resource_type: 'auto',
-        folder: 'album_casal',
+        folder: 'album-do-casal', // Pasta compartilhada
       },
       (error, result) => {
         if (error) {
-          console.error('Erro no upload:', error);
-          return res.status(500).json({ error });
+          console.error(error);
+          return res.status(500).json({ message: 'Erro ao fazer upload.', error });
         }
-
-        const midia = {
-          url: result.secure_url,
-          type: result.resource_type,
-          caption,
-          createdAt: Date.now(),
-        };
-
-        galeria.unshift(midia);
-        res.json({ success: true, midia });
+        return res.json({ url: result.secure_url, type: result.resource_type });
       }
     );
 
-    uploadStream.end(file.buffer);
+    streamifier.createReadStream(req.file.buffer).pipe(stream);
   } catch (err) {
-    console.error('Erro geral:', err);
-    res.status(500).json({ error: err.message });
+    res.status(500).json({ message: 'Erro interno.', error: err });
   }
 });
 
-app.get('/midias', (req, res) => {
-  res.json(galeria);
+// Listar mídias
+app.get('/media', async (req, res) => {
+  try {
+    const result = await cloudinary.search
+      .expression('folder="album-do-casal"') // Apenas da pasta compartilhada
+      .sort_by('created_at', 'desc')
+      .max_results(100)
+      .execute();
+
+    const media = result.resources.map((item) => ({
+      url: item.secure_url,
+      type: item.resource_type,
+    }));
+
+    res.json(media);
+  } catch (err) {
+    res.status(500).json({ message: 'Erro ao listar mídias.', error: err });
+  }
 });
 
-app.listen(3001, () => console.log('Servidor rodando na porta 3001'));
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Servidor rodando na porta ${PORT}`);
+});
