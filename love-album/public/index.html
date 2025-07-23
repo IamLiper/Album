@@ -1,50 +1,47 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Nosso Álbum 💖</title>
+  <title>Nosso Álbum</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+  <div id="menuToggle">
+    <div class="hamburger">&#9776;</div>
+    <div class="sideMenu hidden">
+      <button onclick="filtrar('todas')">Todas as Mídias</button>
+      <button onclick="filtrar('imagem')">Fotos</button>
+      <button onclick="filtrar('video')">Vídeos</button>
+      <button onclick="alert('Em breve: Configurações ✨')">Configurações</button>
+    </div>
+  </div>
+
   <div id="loginScreen">
-    <form id="loginForm" class="form">
-      <h2>Entrar no Álbum</h2>
+    <form id="loginForm">
+      <h2>Nosso Álbum 💖</h2>
       <input id="user1" placeholder="Seu nome" required />
       <input id="user2" placeholder="Nome dela(e)" required />
-      <input id="password" type="password" placeholder="Senha do casal" required />
+      <input id="password" type="password" placeholder="Senha do Amor" required />
       <button type="submit">Entrar</button>
     </form>
   </div>
 
   <div id="album" style="display: none;">
-    <header>
-      <div id="menuToggle">
-        <span></span><span></span><span></span>
-      </div>
-      <nav id="menu" class="hidden">
-        <button onclick="filterGallery('all')">Todas as Mídias</button>
-        <button onclick="filterGallery('image')">Fotos</button>
-        <button onclick="filterGallery('video')">Vídeos</button>
-        <button onclick="openSettings()">Configurações</button>
-      </nav>
-      <h1>💗 Álbum do Amor 💗</h1>
-    </header>
+    <div id="gallery"></div>
+  </div>
 
-    <div id="gallery" class="gallery"></div>
+  <!-- Botão flutuante de adicionar -->
+  <button id="addBtn" onclick="abrirUpload()">＋</button>
 
-    <!-- Botão flutuante -->
-    <button id="addMediaBtn" onclick="openUploadForm()">➕</button>
-
-    <!-- Formulário flutuante de upload -->
-    <div id="uploadPopup" class="popup hidden">
-      <form id="uploadForm" class="form-popup">
-        <input type="file" id="mediaInput" name="file" required />
-        <input type="text" id="caption" placeholder="Comentário fofo 💬" />
-        <button type="submit">Enviar</button>
-        <button type="button" onclick="closeUploadForm()">Cancelar</button>
-      </form>
-    </div>
+  <!-- Modal de upload -->
+  <div id="uploadModal" class="hidden">
+    <form id="uploadForm">
+      <input type="file" id="mediaInput" name="file" required />
+      <input type="text" id="caption" placeholder="Comentário fofo 🥰" />
+      <button type="submit">Enviar</button>
+      <button type="button" onclick="fecharUpload()">Cancelar</button>
+    </form>
   </div>
 
   <script src="script.js"></script>

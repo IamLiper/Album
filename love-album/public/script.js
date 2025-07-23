@@ -1,18 +1,16 @@
-// login, upload e carregar galeria
-// (igual ao que você já tem, só adicionando filtros e menu)
-
 const loginForm = document.getElementById('loginForm');
 const album = document.getElementById('album');
 const loginScreen = document.getElementById('loginScreen');
 const uploadForm = document.getElementById('uploadForm');
 const gallery = document.getElementById('gallery');
-const uploadPopup = document.getElementById('uploadPopup');
+const menuToggle = document.querySelector('.hamburger');
+const sideMenu = document.querySelector('.sideMenu');
 
 const validUser1 = 'Luis';
 const validUser2 = 'Ayla';
 const validPassword = '123amor';
 
-let allMidias = [];
+let todasMidias = [];
 
 loginForm.addEventListener('submit', function (e) {
   e.preventDefault();
@@ -31,6 +29,10 @@ loginForm.addEventListener('submit', function (e) {
   } else {
     alert('Informações incorretas 🥺');
   }
+});
+
+menuToggle.addEventListener('click', () => {
+  sideMenu.classList.toggle('hidden');
 });
 
 uploadForm.addEventListener('submit', async function (e) {
@@ -59,25 +61,33 @@ uploadForm.addEventListener('submit', async function (e) {
     }
 
     uploadForm.reset();
-    closeUploadForm();
+    fecharUpload();
     loadGallery();
   } catch (error) {
     alert('Erro de conexão');
   }
 });
 
-async function loadGallery() {
-  const res = await fetch('https://album-backend-x8m1.onrender.com/midias');
-  const midias = await res.json();
-  allMidias = midias;
-  renderGallery(midias);
+function abrirUpload() {
+  document.getElementById('uploadModal').classList.remove('hidden');
 }
 
-function renderGallery(list) {
+function fecharUpload() {
+  document.getElementById('uploadModal').classList.add('hidden');
+}
+
+async function loadGallery() {
+  const res = await fetch('https://album-backend-x8m1.onrender.com/midias');
+  todasMidias = await res.json();
+  renderGallery(todasMidias);
+}
+
+function renderGallery(lista) {
   gallery.innerHTML = '';
-  list.forEach((m) => {
+  lista.forEach((m) => {
     const item = document.createElement('div');
     item.classList.add('gallery-item');
+
     if (m.type.startsWith('image')) {
       item.innerHTML = `<img src="${m.url}" alt="imagem"><p>${m.caption}</p>`;
     } else if (m.type.startsWith('video')) {
@@ -87,28 +97,11 @@ function renderGallery(list) {
   });
 }
 
-function filterGallery(type) {
-  if (type === 'all') {
-    renderGallery(allMidias);
+function filtrar(tipo) {
+  if (tipo === 'todas') {
+    renderGallery(todasMidias);
   } else {
-    const filtered = allMidias.filter(m => m.type.startsWith(type));
-    renderGallery(filtered);
+    const filtradas = todasMidias.filter((m) => m.type.startsWith(tipo));
+    renderGallery(filtradas);
   }
 }
-
-function openUploadForm() {
-  uploadPopup.classList.remove('hidden');
-}
-
-function closeUploadForm() {
-  uploadPopup.classList.add('hidden');
-}
-
-function openSettings() {
-  alert('Em breve você poderá mudar a senha, cores e mais!');
-}
-
-// Menu hambúrguer toggle
-document.getElementById('menuToggle').addEventListener('click', () => {
-  document.getElementById('menu').classList.toggle('hidden');
-});

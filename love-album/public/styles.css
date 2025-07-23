@@ -1,128 +1,148 @@
+* {
+  box-sizing: border-box;
+  font-family: "Comic Sans MS", cursive;
+}
+
 body {
-  font-family: 'Comic Sans MS', cursive, sans-serif;
-  background-color: #ffe6f0;
   margin: 0;
-  padding: 0;
+  background: #fff0f5;
   color: #333;
 }
 
-h1, h2 {
-  text-align: center;
-  color: #d63384;
+#loginScreen, #uploadModal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
 
-.form, .form-popup {
+#loginForm, #uploadForm {
+  background: white;
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
   display: flex;
   flex-direction: column;
-  align-items: center;
-  background-color: #fff0f5;
-  padding: 20px;
-  margin: 40px auto;
-  width: 90%;
-  max-width: 400px;
-  border-radius: 20px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  gap: 1rem;
+}
+
+#loginForm h2 {
+  color: #e91e63;
+  text-align: center;
 }
 
 input, button {
-  margin: 10px 0;
-  padding: 10px;
+  padding: 0.75rem;
   border: none;
   border-radius: 10px;
-  width: 100%;
+  font-size: 1rem;
 }
 
 button {
-  background-color: #ff69b4;
+  background: #ff69b4;
   color: white;
-  font-weight: bold;
   cursor: pointer;
 }
 
 button:hover {
-  background-color: #ff1493;
+  background: #e91e63;
 }
 
-header {
-  position: relative;
-  background-color: #fff;
-  padding: 10px;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-}
-
-#menuToggle {
-  position: absolute;
-  left: 10px;
-  top: 10px;
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-#menuToggle span {
-  display: block;
-  width: 25px;
-  height: 3px;
-  background-color: #d63384;
-  border-radius: 2px;
-}
-
-#menu.hidden {
-  display: none;
-}
-
-nav {
-  margin-top: 40px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  background-color: #fff0f5;
-  padding: 10px;
-  border-radius: 10px;
-}
-
-.gallery {
+#gallery {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 15px;
-  padding: 15px;
+  gap: 1rem;
+  padding: 1rem;
 }
 
 .gallery-item {
   background: white;
-  padding: 10px;
-  border-radius: 12px;
-  box-shadow: 0 0 8px rgba(0,0,0,0.1);
-  text-align: center;
-}
-
-.gallery-item img, .gallery-item video {
-  max-width: 100%;
   border-radius: 10px;
+  padding: 1rem;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
-#addMediaBtn {
+.gallery-item img,
+.gallery-item video {
+  width: 100%;
+  max-height: 200px;
+  border-radius: 8px;
+}
+
+#addBtn {
   position: fixed;
-  right: 20px;
   bottom: 20px;
+  right: 20px;
+  background: #ff69b4;
+  border: none;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  font-size: 2rem;
+  color: white;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  cursor: pointer;
+}
+
+#uploadModal {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background: rgba(0,0,0,0.4);
+  justify-content: center;
+  align-items: center;
+}
+
+#uploadModal form {
+  background: white;
+  padding: 2rem;
+  border-radius: 1rem;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* Menu lateral */
+#menuToggle {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+}
+
+.hamburger {
+  font-size: 2rem;
   background: #ff69b4;
   color: white;
-  font-size: 24px;
-  padding: 15px;
-  border-radius: 50%;
-  border: none;
-  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+  padding: 0.5rem 0.8rem;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.sideMenu {
+  position: absolute;
+  top: 50px;
+  left: 0;
+  background: white;
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
   z-index: 999;
 }
 
-.popup {
-  position: fixed;
-  bottom: 80px;
-  right: 20px;
-  background-color: #fff0f5;
-  padding: 20px;
-  border-radius: 16px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.3);
-  z-index: 1000;
+.sideMenu button {
+  background: #ffe0ec;
+  color: #333;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.sideMenu button:hover {
+  background: #ffb6c1;
 }
