@@ -42,7 +42,7 @@ uploadForm.addEventListener('submit', async function (e) {
   formData.append('caption', caption);
 
   try {
-    const res = await fetch('https://album-3i76.onrender.com/upload', {
+    const res = await fetch('https://album-backend-x8m1.onrender.com/upload', {
       method: 'POST',
       body: formData,
     });
@@ -60,7 +60,7 @@ uploadForm.addEventListener('submit', async function (e) {
 });
 
 async function loadGallery() {
-  const res = await fetch('https://album-3i76.onrender.com/midias');
+  const res = await fetch('https://album-backend-x8m1.onrender.com/midias');
   const midias = await res.json();
   gallery.innerHTML = '';
 
