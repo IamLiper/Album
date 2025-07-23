@@ -38,7 +38,7 @@ uploadForm.addEventListener('submit', async function (e) {
   }
 
   const formData = new FormData();
-  formData.append('file', file); // ⚠️ nome 'file' deve bater com backend
+  formData.append('media', file); // ⚠️ nome 'file' deve bater com backend
   formData.append('caption', caption);
 
   try {

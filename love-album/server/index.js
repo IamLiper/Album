@@ -30,7 +30,7 @@ app.post('/upload', upload.single('media'), async (req, res) => {
       },
       (error, result) => {
         if (error) {
-          console.error(error);
+          console.error('Erro do Cloudinary', error);
           return res.status(500).json({ message: 'Erro ao fazer upload.', error });
         }
         return res.json({ url: result.secure_url, type: result.resource_type });
@@ -39,6 +39,7 @@ app.post('/upload', upload.single('media'), async (req, res) => {
 
     streamifier.createReadStream(req.file.buffer).pipe(stream);
   } catch (err) {
+    console.error('Erro interno:', err);
     res.status(500).json({ message: 'Erro interno.', error: err });
   }
 });
