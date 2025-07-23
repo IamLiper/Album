@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Nosso Álbum 💖</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="login-screen" id="loginScreen">
+    <h1>Bem-vindos ao nosso cantinho 💑</h1>
+    <form id="loginForm">
+      <input type="text" placeholder="Seu nome" id="user1" required />
+      <input type="text" placeholder="Nome do seu amor" id="user2" required />
+      <input type="password" placeholder="Senha do casal" id="password" required />
+      <button type="submit">Entrar</button>
+    </form>
+  </div>
+
+  <div class="album" id="album" style="display: none;">
+    <h2>🌸 Nosso Álbum 🌸</h2>
+    <form id="uploadForm">
+      <input type="file" id="mediaInput" accept="image/*,video/*" required />
+      <input type="text" id="caption" placeholder="Legenda fofa 💬" />
+      <button type="submit">Enviar</button>
+    </form>
+    <div class="gallery" id="gallery"></div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
