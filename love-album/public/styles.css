@@ -1,148 +1,92 @@
-* {
-  box-sizing: border-box;
-  font-family: "Comic Sans MS", cursive;
-}
-
 body {
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+  background-color: #fff0f5;
   margin: 0;
-  background: #fff0f5;
-  color: #333;
+  padding: 0;
 }
 
-#loginScreen, #uploadModal {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-}
-
-#loginForm, #uploadForm {
-  background: white;
-  padding: 2rem;
-  border-radius: 1rem;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-#loginForm h2 {
-  color: #e91e63;
-  text-align: center;
-}
-
-input, button {
-  padding: 0.75rem;
-  border: none;
-  border-radius: 10px;
-  font-size: 1rem;
-}
-
-button {
-  background: #ff69b4;
-  color: white;
-  cursor: pointer;
-}
-
-button:hover {
-  background: #e91e63;
-}
-
-#gallery {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1rem;
-  padding: 1rem;
-}
-
-.gallery-item {
-  background: white;
-  border-radius: 10px;
-  padding: 1rem;
-  text-align: center;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-}
-
-.gallery-item img,
-.gallery-item video {
-  width: 100%;
-  max-height: 200px;
-  border-radius: 8px;
-}
-
-#addBtn {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background: #ff69b4;
-  border: none;
-  border-radius: 50%;
-  width: 60px;
-  height: 60px;
-  font-size: 2rem;
-  color: white;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-  cursor: pointer;
-}
-
-#uploadModal {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100vw; height: 100vh;
-  background: rgba(0,0,0,0.4);
-  justify-content: center;
-  align-items: center;
-}
-
-#uploadModal form {
-  background: white;
-  padding: 2rem;
-  border-radius: 1rem;
-}
-
-.hidden {
-  display: none !important;
-}
-
-/* Menu lateral */
 #menuToggle {
   position: fixed;
   top: 20px;
   left: 20px;
-}
-
-.hamburger {
-  font-size: 2rem;
-  background: #ff69b4;
-  color: white;
-  padding: 0.5rem 0.8rem;
-  border-radius: 8px;
-  cursor: pointer;
-}
-
-.sideMenu {
-  position: absolute;
-  top: 50px;
-  left: 0;
-  background: white;
-  padding: 1rem;
-  border-radius: 10px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  z-index: 999;
-}
-
-.sideMenu button {
-  background: #ffe0ec;
-  color: #333;
+  z-index: 1001;
+  font-size: 28px;
+  background: none;
   border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 8px;
   cursor: pointer;
+  color: #ff69b4;
 }
 
-.sideMenu button:hover {
-  background: #ffb6c1;
+#menu {
+  position: fixed;
+  top: 0;
+  left: -200px;
+  width: 200px;
+  height: 100%;
+  background-color: #fff;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  transition: left 0.3s ease;
+  z-index: 1000;
+}
+
+#menu.show {
+  left: 0;
+}
+
+#menu ul {
+  list-style: none;
+  padding: 0;
+}
+
+#menu ul li {
+  margin-bottom: 15px;
+  cursor: pointer;
+  color: #ff69b4;
+  font-weight: bold;
+}
+
+#addButton {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: #ff69b4;
+  color: white;
+  font-size: 32px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  transition: transform 0.2s ease;
+}
+
+#addButton:hover {
+  transform: scale(1.1);
+}
+
+#gallery {
+  margin: 100px auto 50px;
+  max-width: 1000px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+.gallery-item {
+  background-color: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  padding: 10px;
+}
+
+.gallery-item img,
+.gallery-item video {
+  max-width: 100%;
+  border-radius: 8px;
 }

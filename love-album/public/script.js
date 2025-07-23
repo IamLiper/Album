@@ -1,49 +1,18 @@
-const loginForm = document.getElementById('loginForm');
-const album = document.getElementById('album');
-const loginScreen = document.getElementById('loginScreen');
-const uploadForm = document.getElementById('uploadForm');
 const gallery = document.getElementById('gallery');
-const menuToggle = document.querySelector('.hamburger');
-const sideMenu = document.querySelector('.sideMenu');
 
-const validUser1 = 'Luis';
-const validUser2 = 'Ayla';
-const validPassword = '123amor';
-
-let todasMidias = [];
-
-loginForm.addEventListener('submit', function (e) {
-  e.preventDefault();
-  const u1 = document.getElementById('user1').value.trim();
-  const u2 = document.getElementById('user2').value.trim();
-  const pw = document.getElementById('password').value;
-
-  if (
-    u1.toLowerCase() === validUser1.toLowerCase() &&
-    u2.toLowerCase() === validUser2.toLowerCase() &&
-    pw === validPassword
-  ) {
-    loginScreen.style.display = 'none';
-    album.style.display = 'block';
-    loadGallery();
-  } else {
-    alert('Informações incorretas 🥺');
-  }
+document.getElementById('menuToggle').addEventListener('click', () => {
+  document.getElementById('menu').classList.toggle('show');
 });
 
-menuToggle.addEventListener('click', () => {
-  sideMenu.classList.toggle('hidden');
+document.getElementById('addButton').addEventListener('click', () => {
+  document.getElementById('uploadForm').style.display = 'block';
+  document.getElementById('uploadForm').scrollIntoView({ behavior: 'smooth' });
 });
 
-uploadForm.addEventListener('submit', async function (e) {
+document.getElementById('uploadForm').addEventListener('submit', async (e) => {
   e.preventDefault();
-  const file = document.getElementById('mediaInput').files[0];
+  const file = document.getElementById('mediaFile').files[0];
   const caption = document.getElementById('caption').value;
-
-  if (!file) {
-    alert('Por favor, selecione um arquivo!');
-    return;
-  }
 
   const formData = new FormData();
   formData.append('file', file);
@@ -60,48 +29,46 @@ uploadForm.addEventListener('submit', async function (e) {
       return;
     }
 
-    uploadForm.reset();
-    fecharUpload();
-    loadGallery();
-  } catch (error) {
+    loadGallery('todas');
+    document.getElementById('uploadForm').reset();
+    document.getElementById('uploadForm').style.display = 'none';
+  } catch {
     alert('Erro de conexão');
   }
 });
 
-function abrirUpload() {
-  document.getElementById('uploadModal').classList.remove('hidden');
+function abrirConfiguracoes() {
+  alert('Em breve: configurações!');
 }
 
-function fecharUpload() {
-  document.getElementById('uploadModal').classList.add('hidden');
+function filtrarMidias(tipo) {
+  loadGallery(tipo);
+  document.getElementById('menu').classList.remove('show');
 }
 
-async function loadGallery() {
-  const res = await fetch('https://album-backend-x8m1.onrender.com/midias');
-  todasMidias = await res.json();
-  renderGallery(todasMidias);
-}
+async function loadGallery(filtro = 'todas') {
+  try {
+    const res = await fetch('https://album-backend-x8m1.onrender.com/media');
+    const midias = await res.json();
+    gallery.innerHTML = '';
 
-function renderGallery(lista) {
-  gallery.innerHTML = '';
-  lista.forEach((m) => {
-    const item = document.createElement('div');
-    item.classList.add('gallery-item');
+    midias
+      .filter((m) => filtro === 'todas' || m.type.startsWith(filtro))
+      .forEach((m) => {
+        const item = document.createElement('div');
+        item.classList.add('gallery-item');
 
-    if (m.type.startsWith('image')) {
-      item.innerHTML = `<img src="${m.url}" alt="imagem"><p>${m.caption}</p>`;
-    } else if (m.type.startsWith('video')) {
-      item.innerHTML = `<video controls><source src="${m.url}"></video><p>${m.caption}</p>`;
-    }
-    gallery.appendChild(item);
-  });
-}
-
-function filtrar(tipo) {
-  if (tipo === 'todas') {
-    renderGallery(todasMidias);
-  } else {
-    const filtradas = todasMidias.filter((m) => m.type.startsWith(tipo));
-    renderGallery(filtradas);
+        if (m.type.startsWith('image')) {
+          item.innerHTML = `<img src="${m.url}" alt="imagem"><p>${m.caption || ''}</p>`;
+        } else if (m.type.startsWith('video')) {
+          item.innerHTML = `<video controls><source src="${m.url}"></video><p>${m.caption || ''}</p>`;
+        }
+        gallery.appendChild(item);
+      });
+  } catch {
+    gallery.innerHTML = '<p style="text-align:center; color:#ff69b4;">Erro ao carregar mídias.</p>';
   }
 }
+
+// Inicializa mostrando todas as mídias
+loadGallery('todas');

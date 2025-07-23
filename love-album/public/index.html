@@ -1,48 +1,31 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Nosso Álbum</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Álbum do Casal</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <div id="menuToggle">
-    <div class="hamburger">&#9776;</div>
-    <div class="sideMenu hidden">
-      <button onclick="filtrar('todas')">Todas as Mídias</button>
-      <button onclick="filtrar('imagem')">Fotos</button>
-      <button onclick="filtrar('video')">Vídeos</button>
-      <button onclick="alert('Em breve: Configurações ✨')">Configurações</button>
-    </div>
+  <button id="menuToggle">☰</button>
+  <div id="menu">
+    <ul>
+      <li onclick="filtrarMidias('todas')">Todas as mídias</li>
+      <li onclick="filtrarMidias('image')">Fotos</li>
+      <li onclick="filtrarMidias('video')">Vídeos</li>
+      <li onclick="abrirConfiguracoes()">Configurações</li>
+    </ul>
   </div>
 
-  <div id="loginScreen">
-    <form id="loginForm">
-      <h2>Nosso Álbum 💖</h2>
-      <input id="user1" placeholder="Seu nome" required />
-      <input id="user2" placeholder="Nome dela(e)" required />
-      <input id="password" type="password" placeholder="Senha do Amor" required />
-      <button type="submit">Entrar</button>
-    </form>
-  </div>
+  <div id="gallery"></div>
 
-  <div id="album" style="display: none;">
-    <div id="gallery"></div>
-  </div>
+  <button id="addButton">+</button>
 
-  <!-- Botão flutuante de adicionar -->
-  <button id="addBtn" onclick="abrirUpload()">＋</button>
-
-  <!-- Modal de upload -->
-  <div id="uploadModal" class="hidden">
-    <form id="uploadForm">
-      <input type="file" id="mediaInput" name="file" required />
-      <input type="text" id="caption" placeholder="Comentário fofo 🥰" />
-      <button type="submit">Enviar</button>
-      <button type="button" onclick="fecharUpload()">Cancelar</button>
-    </form>
-  </div>
+  <form id="uploadForm" style="display:none">
+    <input type="file" id="mediaFile" accept="image/*,video/*" required />
+    <input type="text" id="caption" placeholder="Comentário fofo" />
+    <button type="submit">Enviar</button>
+  </form>
 
   <script src="script.js"></script>
 </body>
