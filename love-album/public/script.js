@@ -1,82 +1,112 @@
-// Alternar seções
-const menuItems = document.querySelectorAll('.menu li');
-const sections = document.querySelectorAll('.menu-section');
-menuItems.forEach((item) => {
-  item.addEventListener('click', () => {
-    menuItems.forEach(i => i.classList.remove('active'));
-    sections.forEach(s => s.classList.remove('active'));
-    item.classList.add('active');
-    document.getElementById(item.dataset.section).classList.add('active');
-  });
-});
-
-// Mostrar modal
-const addBtn = document.getElementById('addMediaBtn');
-const modal = document.getElementById('uploadModal');
+const loginForm = document.getElementById('loginForm');
+const album = document.getElementById('album');
+const loginScreen = document.getElementById('loginScreen');
+const uploadForm = document.getElementById('uploadForm');
+const gallery = document.getElementById('gallery');
+const uploadModal = document.getElementById('uploadModal');
+const addButton = document.getElementById('addButton');
 const closeModal = document.getElementById('closeModal');
-addBtn.addEventListener('click', () => modal.style.display = 'block');
-closeModal.addEventListener('click', () => modal.style.display = 'none');
-window.addEventListener('click', (e) => {
-  if (e.target === modal) modal.style.display = 'none';
+const menuToggle = document.getElementById('menuToggle');
+const menuOptions = document.getElementById('menuOptions');
+const toggleTheme = document.getElementById('toggleTheme');
+
+const validUser1 = 'Luis';
+const validUser2 = 'Ayla';
+const validPassword = '123amor';
+
+document.addEventListener('DOMContentLoaded', () => {
+  const savedTheme = localStorage.getItem('theme');
+  if (savedTheme === 'dark') document.body.classList.add('dark');
 });
 
-// Upload
-document.getElementById('uploadForm').addEventListener('submit', async (e) => {
+toggleTheme.addEventListener('click', () => {
+  document.body.classList.toggle('dark');
+  localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
+});
+
+menuToggle.addEventListener('click', () => {
+  menuOptions.classList.toggle('hidden');
+});
+
+loginForm.addEventListener('submit', function (e) {
   e.preventDefault();
-  const formData = new FormData(e.target);
+  const u1 = document.getElementById('user1').value.trim();
+  const u2 = document.getElementById('user2').value.trim();
+  const pw = document.getElementById('password').value;
+
+  if (
+    u1.toLowerCase() === validUser1.toLowerCase() &&
+    u2.toLowerCase() === validUser2.toLowerCase() &&
+    pw === validPassword
+  ) {
+    loginScreen.style.display = 'none';
+    album.style.display = 'flex';
+    loadGallery();
+  } else {
+    alert('Informações incorretas 🥺');
+  }
+});
+
+uploadForm.addEventListener('submit', async function (e) {
+  e.preventDefault();
+  const file = document.getElementById('mediaInput').files[0];
+  const caption = document.getElementById('caption').value;
+
+  if (!file) {
+    alert('Por favor, selecione um arquivo!');
+    return;
+  }
+
+  const formData = new FormData();
+  formData.append('file', file);
+  formData.append('caption', caption);
+
   try {
     const res = await fetch('https://album-backend-x8m1.onrender.com/upload', {
       method: 'POST',
       body: formData,
     });
-    const data = await res.json();
-    alert('Enviado com sucesso!');
-    modal.style.display = 'none';
-    location.reload();
-  } catch (err) {
-    alert('Erro ao enviar mídia.');
+
+    if (!res.ok) {
+      alert('Erro ao enviar mídia');
+      return;
+    }
+
+    uploadModal.classList.add('hidden');
+    uploadForm.reset();
+    loadGallery();
+  } catch (error) {
+    alert('Erro de conexão');
   }
 });
 
-// Alternar tema claro/escuro
-const themeToggle = document.getElementById('themeToggle');
-themeToggle.addEventListener('click', () => {
-  document.body.classList.toggle('dark');
-  localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
+addButton.addEventListener('click', () => {
+  uploadModal.classList.remove('hidden');
 });
 
-// Aplicar tema salvo
-window.addEventListener('DOMContentLoaded', async () => {
-  const savedTheme = localStorage.getItem('theme');
-  if (savedTheme === 'dark') {
-    document.body.classList.add('dark');
-  }
+closeModal.addEventListener('click', () => {
+  uploadModal.classList.add('hidden');
+});
 
-  // Carregar mídias
+async function loadGallery() {
   try {
-    const res = await fetch('https://album-backend-x8m1.onrender.com/media');
-    const data = await res.json();
-    const all = document.getElementById('all');
-    const photos = document.getElementById('photos');
-    const videos = document.getElementById('videos');
-    all.innerHTML = '';
-    photos.innerHTML = '';
-    videos.innerHTML = '';
+    const res = await fetch('https://album-backend-x8m1.onrender.com/midias');
+    const midias = await res.json();
+    gallery.innerHTML = '';
 
-    data.forEach((item) => {
-      const element = document.createElement(item.type === 'image' ? 'img' : 'video');
-      element.src = item.url;
-      element.classList.add('media-item');
-      element.controls = item.type !== 'image';
-      element.style.maxWidth = '100%';
-      element.style.borderRadius = '12px';
-      element.style.marginBottom = '12px';
+    midias.forEach((m) => {
+      const item = document.createElement('div');
+      item.classList.add('gallery-item');
 
-      all.appendChild(element.cloneNode(true));
-      if (item.type === 'image') photos.appendChild(element.cloneNode(true));
-      if (item.type === 'video') videos.appendChild(element.cloneNode(true));
+      if (m.type.startsWith('image')) {
+        item.innerHTML = `<img src="${m.url}" alt="imagem"><p>${m.caption}</p>`;
+      } else if (m.type.startsWith('video')) {
+        item.innerHTML = `<video controls><source src="${m.url}"></video><p>${m.caption}</p>`;
+      }
+
+      gallery.appendChild(item);
     });
   } catch (err) {
-    console.error('Erro ao carregar mídias:', err);
+    console.error('Erro ao carregar galeria', err);
   }
-});
+}

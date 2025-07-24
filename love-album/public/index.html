@@ -3,42 +3,46 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Álbum do Casal 💕</title>
+  <title>Álbum do Casal 💖</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <nav class="sidebar" id="sidebar">
-    <div class="menu-button" id="menuToggle">☰</div>
-    <ul class="menu" id="menu">
-      <li data-section="all" class="active">Todas as Mídias</li>
-      <li data-section="photos">Fotos</li>
-      <li data-section="videos">Vídeos</li>
-      <li data-section="config">Configurações</li>
-    </ul>
-  </nav>
+  <div id="loginScreen">
+    <form id="loginForm">
+      <h2>Login do Amor 💘</h2>
+      <input type="text" id="user1" placeholder="Nome 1" required />
+      <input type="text" id="user2" placeholder="Nome 2" required />
+      <input type="password" id="password" placeholder="Senha" required />
+      <button type="submit">Entrar</button>
+    </form>
+  </div>
 
-  <main>
-    <section id="all" class="menu-section active"></section>
-    <section id="photos" class="menu-section"></section>
-    <section id="videos" class="menu-section"></section>
-    <section id="config" class="menu-section">
-      <h2>Configurações</h2>
-      <button id="themeToggle">Alternar Modo Noturno 🌙</button>
-    </section>
-  </main>
+  <div id="album" class="hidden">
+    <aside class="sidebar">
+      <button class="menu-toggle" id="menuToggle">☰</button>
+      <nav id="menuOptions" class="hidden">
+        <button data-filter="all">Todas as Mídias</button>
+        <button data-filter="image">Fotos</button>
+        <button data-filter="video">Vídeos</button>
+        <button id="toggleTheme">🌞/🌙 Tema</button>
+        <button>⚙️ Configurações</button>
+      </nav>
+    </aside>
 
-  <!-- Botão flutuante -->
-  <button class="fab" id="addMediaBtn">＋</button>
+    <main>
+      <div id="gallery"></div>
+    </main>
 
-  <!-- Modal de upload -->
-  <div class="modal" id="uploadModal">
-    <div class="modal-content">
-      <span class="close" id="closeModal">&times;</span>
-      <h2>Adicionar Mídia</h2>
+    <!-- Botão flutuante -->
+    <button id="addButton">＋</button>
+
+    <!-- Modal para envio -->
+    <div id="uploadModal" class="modal hidden">
       <form id="uploadForm">
-        <input type="file" name="media" required />
-        <input type="text" name="comment" placeholder="Comentário (opcional)" />
-        <button type="submit">Enviar</button>
+        <input type="file" id="mediaInput" accept="image/*,video/*" required />
+        <input type="text" id="caption" placeholder="Comentário fofo 💬" />
+        <button type="submit">Enviar 💌</button>
+        <button type="button" id="closeModal">Cancelar ❌</button>
       </form>
     </div>
   </div>
