@@ -2,51 +2,46 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Álbum do Casal 💖</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Álbum do Casal</title>
   <link rel="stylesheet" href="style.css" />
 </head>
-<body>
-  <div id="loginScreen">
-    <form id="loginForm">
-      <h2>Login do Amor 💘</h2>
-      <input type="text" id="user1" placeholder="Nome 1" required />
-      <input type="text" id="user2" placeholder="Nome 2" required />
-      <input type="password" id="password" placeholder="Senha" required />
-      <button type="submit">Entrar</button>
-    </form>
+<body class="light-mode">
+  <div class="sidebar">
+    <button class="menu-toggle">☰</button>
+    <nav class="menu">
+      <button data-tab="all">Todas as Mídias</button>
+      <button data-tab="photos">Fotos</button>
+      <button data-tab="videos">Vídeos</button>
+      <button data-tab="settings">Configurações</button>
+    </nav>
   </div>
 
-  <div id="album" class="hidden">
-    <aside class="sidebar">
-      <button class="menu-toggle" id="menuToggle">☰</button>
-      <nav id="menuOptions" class="hidden">
-        <button data-filter="all">Todas as Mídias</button>
-        <button data-filter="image">Fotos</button>
-        <button data-filter="video">Vídeos</button>
-        <button id="toggleTheme">🌞/🌙 Tema</button>
-        <button>⚙️ Configurações</button>
-      </nav>
-    </aside>
+  <main>
+    <section id="all" class="tab active"></section>
+    <section id="photos" class="tab"></section>
+    <section id="videos" class="tab"></section>
+    <section id="settings" class="tab">
+      <h2>Configurações</h2>
+      <label>
+        <input type="checkbox" id="themeToggle" />
+        Modo escuro
+      </label>
+    </section>
+  </main>
 
-    <main>
-      <div id="gallery"></div>
-    </main>
+  <button class="add-button">+</button>
 
-    <!-- Botão flutuante -->
-    <button id="addButton" class="fab">+</button>
-
-    <!-- Modal para envio -->
-    <div id="modalOverlay" class="modal-overlay hidden">
-      <div class="modal">
-        <button id="closeModal" class="close-btn">×</button>
-        <form id="uploadForm">
-          <input type="file" id="mediaInput" name="file" required />
-          <input type="text" id="caption" placeholder="Comentário" />
-          <button type="submit">Enviar</button>
-        </form>
-      </div>
+  <div class="modal hidden" id="addModal">
+    <div class="modal-content">
+      <button class="close-modal">×</button>
+      <form id="uploadForm">
+        <input type="file" name="file" required />
+        <input type="text" name="caption" placeholder="Comentário (opcional)" />
+        <button type="submit">Enviar</button>
+      </form>
     </div>
+  </div>
 
   <script src="script.js"></script>
 </body>
