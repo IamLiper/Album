@@ -2,30 +2,59 @@
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Álbum do Casal</title>
-  <link rel="stylesheet" href="styles.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Love Album 💖</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <button id="menuToggle">☰</button>
-  <div id="menu">
-    <ul>
-      <li onclick="filtrarMidias('todas')">Todas as mídias</li>
-      <li onclick="filtrarMidias('image')">Fotos</li>
-      <li onclick="filtrarMidias('video')">Vídeos</li>
-      <li onclick="abrirConfiguracoes()">Configurações</li>
-    </ul>
+  <div id="loginScreen">
+    <form id="loginForm">
+      <h2>Álbum do Amor 💕</h2>
+      <input type="text" id="user1" placeholder="Seu nome" required />
+      <input type="text" id="user2" placeholder="Nome dela" required />
+      <input type="password" id="password" placeholder="Senha do casal" required />
+      <button type="submit">Entrar</button>
+    </form>
   </div>
 
-  <div id="gallery"></div>
+  <div id="album" style="display: none;">
+    <!-- Menu lateral -->
+    <nav class="sidebar" id="sidebar">
+      <ul>
+        <li data-tab="all" class="active">Todas as Mídias</li>
+        <li data-tab="photos">Fotos</li>
+        <li data-tab="videos">Vídeos</li>
+        <li data-tab="settings">Configurações</li>
+      </ul>
+    </nav>
 
-  <button id="addButton">+</button>
+    <!-- Cabeçalho com botão de menu -->
+    <header>
+      <button id="menuToggle">☰</button>
+      <h1>Love Album 💘</h1>
+    </header>
 
-  <form id="uploadForm" style="display:none">
-    <input type="file" id="mediaFile" accept="image/*,video/*" required />
-    <input type="text" id="caption" placeholder="Comentário fofo" />
-    <button type="submit">Enviar</button>
-  </form>
+    <!-- Galeria -->
+    <main>
+      <section id="gallery" class="gallery"></section>
+    </main>
+
+    <!-- Botão flutuante -->
+    <button id="addMediaBtn">＋</button>
+
+    <!-- Modal de envio -->
+    <div id="modal" class="modal hidden">
+      <form id="uploadForm">
+        <h3>Adicionar Mídia</h3>
+        <input type="file" id="mediaInput" name="file" required />
+        <input type="text" id="caption" placeholder="Comentário fofo" name="caption" required />
+        <div class="modal-buttons">
+          <button type="submit">Enviar</button>
+          <button type="button" id="closeModal">Cancelar</button>
+        </div>
+      </form>
+    </div>
+  </div>
 
   <script src="script.js"></script>
 </body>

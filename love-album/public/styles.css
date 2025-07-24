@@ -1,92 +1,166 @@
 body {
   font-family: 'Comic Sans MS', cursive, sans-serif;
-  background-color: #fff0f5;
   margin: 0;
-  padding: 0;
+  background-color: #fff0f5;
+  color: #444;
+}
+
+h1, h2 {
+  text-align: center;
+  color: #e91e63;
+}
+
+#loginForm, #uploadForm {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 80%;
+  max-width: 350px;
+  margin: 60px auto;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+input, button {
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+  font-size: 16px;
+}
+
+button {
+  background-color: #ff69b4;
+  color: white;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  background-color: #e91e63;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  background-color: #ffe4e1;
+  padding: 10px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
 
 #menuToggle {
-  position: fixed;
-  top: 20px;
-  left: 20px;
-  z-index: 1001;
-  font-size: 28px;
   background: none;
+  font-size: 24px;
   border: none;
   cursor: pointer;
-  color: #ff69b4;
+  margin-right: 15px;
+  color: #e91e63;
 }
 
-#menu {
+.sidebar {
   position: fixed;
-  top: 0;
-  left: -200px;
-  width: 200px;
-  height: 100%;
-  background-color: #fff;
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  transition: left 0.3s ease;
-  z-index: 1000;
-}
-
-#menu.show {
+  top: 60px;
   left: 0;
+  background-color: #fff;
+  width: 180px;
+  height: 100%;
+  padding-top: 20px;
+  box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+  z-index: 10;
 }
 
-#menu ul {
+.sidebar.open {
+  transform: translateX(0);
+}
+
+.sidebar ul {
   list-style: none;
   padding: 0;
 }
 
-#menu ul li {
-  margin-bottom: 15px;
+.sidebar li {
+  padding: 15px;
   cursor: pointer;
-  color: #ff69b4;
+  border-bottom: 1px solid #eee;
+}
+
+.sidebar li.active {
+  background-color: #ffe4e1;
   font-weight: bold;
 }
 
-#addButton {
+.gallery {
+  margin-left: 0;
+  padding: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: center;
+}
+
+.gallery-item {
+  background-color: white;
+  padding: 10px;
+  border-radius: 15px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  width: 280px;
+  text-align: center;
+}
+
+.gallery-item img, .gallery-item video {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+/* Botão flutuante */
+#addMediaBtn {
   position: fixed;
   bottom: 20px;
   right: 20px;
   width: 60px;
   height: 60px;
-  border-radius: 50%;
   background-color: #ff69b4;
   color: white;
-  font-size: 32px;
+  border-radius: 50%;
+  font-size: 30px;
   border: none;
   cursor: pointer;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  z-index: 1000;
-  transition: transform 0.2s ease;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
 }
 
-#addButton:hover {
-  transform: scale(1.1);
-}
-
-#gallery {
-  margin: 100px auto 50px;
-  max-width: 1000px;
+/* Modal */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 20px;
-  padding: 20px;
+  place-items: center;
+  z-index: 20;
 }
 
-.gallery-item {
+.modal form {
   background-color: white;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  text-align: center;
-  padding: 10px;
+  padding: 20px;
+  border-radius: 15px;
+  width: 90%;
+  max-width: 350px;
 }
 
-.gallery-item img,
-.gallery-item video {
-  max-width: 100%;
-  border-radius: 8px;
+.modal-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.hidden {
+  display: none;
 }
