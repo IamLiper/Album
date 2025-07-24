@@ -34,18 +34,19 @@
     </main>
 
     <!-- Botão flutuante -->
-    <button id="addButton">＋</button>
+    <button id="addButton" class="fab">+</button>
 
     <!-- Modal para envio -->
-    <div id="uploadModal" class="modal hidden">
-      <form id="uploadForm">
-        <input type="file" id="mediaInput" accept="image/*,video/*" required />
-        <input type="text" id="caption" placeholder="Comentário fofo 💬" />
-        <button type="submit">Enviar 💌</button>
-        <button type="button" id="closeModal">Cancelar ❌</button>
-      </form>
+    <div id="modalOverlay" class="modal-overlay hidden">
+      <div class="modal">
+        <button id="closeModal" class="close-btn">×</button>
+        <form id="uploadForm">
+          <input type="file" id="mediaInput" name="file" required />
+          <input type="text" id="caption" placeholder="Comentário" />
+          <button type="submit">Enviar</button>
+        </form>
+      </div>
     </div>
-  </div>
 
   <script src="script.js"></script>
 </body>

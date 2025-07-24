@@ -9,6 +9,7 @@ const closeModal = document.getElementById('closeModal');
 const menuToggle = document.getElementById('menuToggle');
 const menuOptions = document.getElementById('menuOptions');
 const toggleTheme = document.getElementById('toggleTheme');
+const modalOverlay = document.getElementById('modalOverlay');
 
 const validUser1 = 'Luis';
 const validUser2 = 'Ayla';
@@ -110,3 +111,18 @@ async function loadGallery() {
     console.error('Erro ao carregar galeria', err);
   }
 }
+
+addButton.addEventListener('click', () => {
+  modalOverlay.classList.remove('hidden');
+});
+
+closeModal.addEventListener('click', () => {
+  modalOverlay.classList.add('hidden');
+});
+
+// Fecha o modal clicando fora da caixa
+modalOverlay.addEventListener('click', (e) => {
+  if (e.target === modalOverlay) {
+    modalOverlay.classList.add('hidden');
+  }
+});
